@@ -7,7 +7,10 @@
 		{
 			"Name": "Simmons_Original_WB",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	]
 }
