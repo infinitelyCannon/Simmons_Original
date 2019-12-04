@@ -2,34 +2,31 @@
 
 #include "UtilityBPs.h"
 #include <direct.h>
-#include <string>
 
 FString UUtilityBPs::GetWorkingDirectory()
 {
 	char buffer[FILENAME_MAX];
-	int end;
+	FString classified = "[CLASSIFIED]\\";
+	int32 end;
 
 	_getcwd(buffer, FILENAME_MAX);
 
-	std::string value(buffer);
+	FString result(buffer);
+	FString substr = "";
+	int32 spot = result.Find("C:\\Users");
 
-	int spot = value.find("C:\\Users");
-
-	if (spot != std::string::npos)
+	if (spot >= 0)
 	{
-		for (size_t i = 9; i < value.length; ++i)
+		for (int32 i = 9; i < result.Len(); ++i)
 		{
-			if (value[i] == '\\')
+			substr += result[i];
+			if (result[i] == '\\')
 			{
-				end = (int) i;
-				i = value.length;
+				end = i;
+				i = result.Len();
 			}
 		}
 	}
 
-	value.replace(9, end - 9, "[CLASSIFIED]");
-
-	FString result(value.c_str());
-
-	return result;
+	return result.Replace(*substr, *classified);
 }
